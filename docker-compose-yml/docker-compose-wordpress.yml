@@ -1,35 +1,37 @@
 version: '3'
-net:
-    wpnet:
+networks:
+  wpnet:
     
 services:
-    db:
-        image: mysql:5.6
-        volumes:
-         - ~/data/wordpress/db:/var/lib/mysql
-        ports:
-         - "33306:3306"
-        restart: always
-        environment:
-          MYSQL_ROOT_PASSWORD:  minerootpwd
-          MYSQL_DATABASE: wordpress
-          MYSQL_USER: wordpress
-          MYSQL_PASSWORD: minewordpresspwd
-        net: wpnet
+  db:
+    image: mysql:5.6
+    volumes:
+    - ~/data/wordpress/db:/var/lib/mysql
+    ports:
+    - "33306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD:  minerootpwd
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: minewordpresspwd
+    networks: 
+    - wpnet
         
-    web:
-        image: wordpress:latest
-        volumes:
-         - ./www:/var/www/html
-         - ./config/wordpress/upload.ini:/usr/local/etc/php/conf.d/uploads.ini
-        ports:
-         - "80:80"
-         - "443:443"
-        restart: always
-        environment:
-          WORDPRESS_DB_HOST: db:3306
-          WORDPRESS_DB_USER: wordpress
-          WORDPRESS_DB_PASSWORD: minewordpresspwd
-        depends_on:
-         - db
-        net: wpnet
+  web:
+    image: wordpress:latest
+    volumes:
+    - ./www:/var/www/html
+    - ./config/wordpress/upload.ini:/usr/local/etc/php/conf.d/uploads.ini
+    ports:
+    - "80:80"
+    - "443:443"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: minewordpresspwd
+    depends_on:
+    - db
+    networks: 
+    - wpnet
