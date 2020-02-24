@@ -10,7 +10,10 @@
 # 使用方法
 
 ```
+cd onescripts/
 sh deploy.sh
 ```
+注意事项：因为脚本的相对路径，所以尽量cd到onescritps目录下。
+
 
 # 欢迎大家拍砖
