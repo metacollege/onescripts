@@ -113,10 +113,10 @@ function install_compose(){
 	read -p "please choose  " ans
 	case "$ans" in
 	on | o)
-	source ./scripts/install-docker-compose.sh
+	source ./scripts/install_docker-compose.sh
 	;;
 	off | f)
-	source ./scripts/install-docker-compose.sh ./docker/docker-compose-Linux-x86_64
+	source ./scripts/install_docker-compose.sh ./docker/docker-compose-Linux-x86_64
 	;;
 	b | back)
 	naviBar
@@ -127,7 +127,7 @@ function install_compose(){
 	install_compose
 	else
 	green "begin install process..."
-	source ./scripts/install-docker-compose.sh  $ans
+	source ./scripts/install_docker-compose.sh  $ans
 	fi
 	;;
 	esac
