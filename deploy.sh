@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-###!/bin/bash
 source ./scripts/utils.sh
 
 function naviBar() {
 	show
-	read -p "请选择  " ans
+	read -p "please choose  " ans
 	case "$ans" in
 	a | all)
 	install_dockerall
@@ -20,18 +19,18 @@ function naviBar() {
 	set_env
 	;;
 	m | maven)
-	echo "安装JDK+maven"
+	echo "install JDK+maven"
 	;;
 
 	j | jdk)
-	echo "安装JDK"
+	echo "install JDK"
 	;;
 
 	i | import)
-	echo "导入镜像"
+	echo "import images"
 	;;
 	f | fabric)
-	echo "安装fabric"
+	echo "install fabric"
 	install_fabric
 	;;
 	exit)
@@ -51,12 +50,12 @@ function precheck(){
 if [ $USER == "root" -o $UID -eq 0 ]; then
 	echo "$USER"
 else
-    echo -e "\033[35m WARMING！！此用户非root用户，安装可能会失败！！\033[0m"
+    echo -e "\033[35m WARMING！！no root！！\033[0m"
 fi
 
 #查看系统版本
 #`cat  /etc/*release*`
-byellow "操作系统为`uname -s`-`uname -m`"
+byellow "os is `uname -s`-`uname -m`"
 
 }
 
@@ -65,7 +64,7 @@ byellow "操作系统为`uname -s`-`uname -m`"
 function install_dockerall(){
 	
 	showonline
-	read -p "请选择  " ans
+	read -p "please choose  " ans
 	case "$ans" in
 	on | o)
 	source ./scripts/install_docker_online.sh
@@ -85,7 +84,7 @@ function install_dockerall(){
 function install_docker(){
 
 	showonline
-	read -p "请选择  " ans
+	read -p "please choose  " ans
 	case "$ans" in
 	on | o)
 	source ./scripts/install_docker_online.sh
@@ -98,10 +97,10 @@ function install_docker(){
 	;;
 	*)
 	if [ ! -f $ans ]; then
-	echo -e "\033[33m 选项或文件未找到，请重新输入... \033[0m"
+	echo -e "\033[33m files not found... \033[0m"
 	install_docker
 	else
-	echo -e "\033[34m 找到文件，启动安装... \033[0m"
+	echo -e "\033[34m begin install process... \033[0m"
 	source ./scripts/install_docker_offline.sh $ans
 	fi
 	;;
@@ -111,7 +110,7 @@ function install_docker(){
 function install_compose(){
 
 	showonline
-	read -p "请选择  " ans
+	read -p "please choose  " ans
 	case "$ans" in
 	on | o)
 	source ./scripts/install-docker-compose.sh
@@ -124,10 +123,10 @@ function install_compose(){
 	;;
 	*)
 	if [ ! -f $ans ]; then
-	byellow "选项或文件未找到，请重新输入... "
+	byellow "option or file not found... "
 	install_compose
 	else
-	green "找到文件，启动安装..."
+	green "begin install process..."
 	source ./scripts/install-docker-compose.sh  $ans
 	fi
 	;;
@@ -145,22 +144,22 @@ function set_env(){
 }
 
 function showonline(){
-	echo -e "\033[34m 请选择安装方式 \033[0m"
-	echo "【 o 】 在线安装"
-	echo "【 f 】 离线安装"
-	echo "【 b 】 返回"
+	echo -e "\033[34m please choose \033[0m"
+	echo "【 o 】 online install"
+	echo "【 f 】 offline install"
+	echo "【 b 】 back"
 }
 
 function show(){
-	echo -e "\033[34m 请选择安装方式 \033[0m"
-	echo "【 a 】 一键安装"
-	echo "【 d 】 安装docker"
-	echo "【 c 】 安装docker-compose"
-	echo "【 e 】 配置必要环境"
-	echo "【 m 】 安装JDK+maven"
-	echo "【 j 】 安装JDK"
-	echo "【 i 】 导入镜像"
-	red "【 exit 】退出"
+	echo -e "\033[34m please choose \033[0m"
+	echo "【 a 】 all-in-one"
+	echo "【 d 】 install docker"
+	echo "【 c 】 install docker-compose"
+	echo "【 e 】 environment"
+	echo "【 m 】 install JDK+maven"
+	echo "【 j 】 install JDK"
+	echo "【 i 】 import images"
+	red "【 exit 】exit"
 }
 
 precheck
