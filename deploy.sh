@@ -48,9 +48,9 @@ function precheck(){
 
 #判断是否为root用户，弹出提示
 if [ $USER == "root" -o $UID -eq 0 ]; then
-	echo "$USER"
+	blue "$USER"
 else
-    echo -e "\033[35m WARMING！！no root！！\033[0m"
+	byellow "WARMING!! Not ROOT"
 fi
 
 #查看系统版本
@@ -166,7 +166,7 @@ precheck
 naviBar
 
 
-green "成功"
+green "install success"
 exit 0
 
 
