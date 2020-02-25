@@ -1,0 +1,10 @@
+FROM php:apache-stretch
+MAINTAINER tanbaobao 2360415871@qq.com
+COPY ./upload/ /var/www/html
+RUN cd /usr/local/bin \
+    && ./docker-php-ext-install pdo_mysql \
+    && ./docker-php-ext-install mysqli \
+    && cd /var/www/html/ \
+    && chmod a+w -R config data uc_server/data uc_client/data \
+    && rm -rf /var/lib/apt/lists/*
+EXPOSE 80

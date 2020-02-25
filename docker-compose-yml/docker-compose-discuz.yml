@@ -1,0 +1,18 @@
+version: '3'
+networks:
+  docker-compose-yml_wpnet:
+    external: true
+services:
+  discuz:
+    build: 
+      context: .
+      dockerfile: discuz_dockerfile
+    image: discuz:3.4
+    
+    volumes:
+    - ~/data/discuz/data:/var/www/html
+    networks:
+    - docker-compose-yml_wpnet
+    ports:
+    - "8090:80"
+    restart: always
