@@ -33,7 +33,7 @@ function naviBar() {
 	echo "install fabric"
 	install_fabric
 	;;
-	exit)
+	exit | q)
 	echo "exiting..."
 	exit 1
 	;;
