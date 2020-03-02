@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
-set -e
-
 OFFLINE_FLAG=
 DOCKER_BIN_FILE_PATH=
 DOCKER_COMPOSE_PATH=
-IMAGE_PATH='./images'
-INSTALL_FILE_PATH='./package'
-
+IMAGE_PATH=
+INSTALL_FILE_PATH=
+#IMAGE_PATH='./images'
+#INSTALL_FILE_PATH='./package'
 
 #检查环境，是否是64位，是否是root用户
 function precheck(){
@@ -345,7 +344,7 @@ function printHelp(){
 
 precheck
 
-while getopts "h?fd:c:i:os" opt; do
+while getopts ":h?fd:c:i:os" opt; do
   case "$opt" in
   h | \?)
     printHelp
@@ -358,33 +357,36 @@ while getopts "h?fd:c:i:os" opt; do
     OFFLINE_FLAG=1
 	;;
   d)
-    OFFLINE_FLAG=1  
 	DOCKER_BIN_FILE_PATH=$OPTARG
 	;;
   c)
-    OFFLINE_FLAG=1
-    DOCKER_COMPOSE_PATH=$OPTARG
+  DOCKER_COMPOSE_PATH=$OPTARG
 	;;
   i)
 	IMAGE_PATH=$OPTARG
   ;;
   esac
 done
+
+if [ $# -eq 0 ];then
+exit 1
+fi
+
     
 if [ -z $OFFLINE_FLAG  ];then
-echo "no install"
+ if [ ! -z $DOCKER_BIN_FILE_PATH ];then
+    installDockerOffline $DOCKER_BIN_FILE_PATH
+  fi
+  if [ ! -z $DOCKER_COMPOSE_PATH ];then
+    installDockerCompose $DOCKER_COMPOSE_PATH
+  fi
 elif [ "$OFFLINE_FLAG" == "0" ];then
   echo "online install"
   installDockerOnline
   installDockerCompose
 elif [ "$OFFLINE_FLAG" == "1" ];then
-  if [ -z $DOCKER_BIN_FILE_PATH ];then
-    findDocker $INSTALL_FILE_PATH
-  fi
-  if [ -z $DOCKER_COMPOSE_PATH ];then
-    findDockerCompose $INSTALL_FILE_PATH	
-  fi
-  echo "offline install"
+  findDocker './package'
+  findDockerCompose './package'
   installDockerOffline $DOCKER_BIN_FILE_PATH
   installDockerCompose $DOCKER_COMPOSE_PATH
 fi
